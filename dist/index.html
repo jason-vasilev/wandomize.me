@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Randomizer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="body">
+    <form class="form" onsubmit="return false">
+      <fieldset class="fieldset">
+        <label for="random_1" class="label">
+          <span contenteditable="true" class="label-label">Randomize</span>
+
+          <button type="button" class="edit-label" onclick="EditLabel()">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="#fff"
+              class="input-label__icon"
+              viewBox="0 0 48 48"
+              aria-labelledby="svg-title svg-description"
+            >
+              <title id="svg-title">Edit label</title>
+              <desc id="svg-description">
+                Icon of pencil for edit function of input label
+              </desc>
+              <path
+                d="m38.657 18.536 2.44-2.44a6.509 6.509 0 0 0 0-9.193c-1.227-1.226-2.858-1.9-4.597-1.9s-3.371.675-4.597 1.901l-2.439 2.439 9.193 9.193zm-11.314-7.072L9.274 29.533a3.51 3.51 0 0 0-.848 1.375l-3.35 10.121a1.498 1.498 0 0 0 1.896 1.895l10.118-3.351c.517-.17.993-.463 1.378-.849l18.068-18.068-9.193-9.192z"
+              />
+            </svg>
+          </button>
+        </label>
+        <input
+          class="input"
+          type="text"
+          id="random_1"
+          value="Banana, Orange, Pear, Apricot, Apple, Avocado, Blackberries, Blackcurrant, Blueberries, Boysenberries,cherry, Chokeberry, Cranberry, Durian, Elderberry"
+        />
+        <button type="button" class="delete-item" onclick="DeleteItem()">
+          <span>Delete item</span
+          ><span class="hidden">Click again to complete</span>
+        </button>
+      </fieldset>
+
+      <button type="button" class="new-item" id="new-item" onclick="AddItem()">
+        Add another item
+      </button>
+
+      <button type="button" class="submit" id="submit" onclick="Randomize()">
+        Randomize
+      </button>
+
+      <p id="output">&nbsp;</p>
+    </form>
+
+    <script>
+      // Great practice of using both magic numbers and global variables
+      let everyGrowingNumber = 2;
+
+      function EditLabel() {
+        const label = event.target.previousElementSibling;
+        // label.setAttribute("contenteditable", "true");
+        label.focus();
+      }
+
+      function Randomize() {
+        const items = document.querySelectorAll(".fieldset");
+        const output = document.getElementById("output");
+
+        // reset output from the previous wandomization
+        output.innerHTML = null;
+
+        // get wandomized results from all inputs
+        items.forEach((item) => {
+          const input = item.querySelector(".input").value.split(",");
+          const label = item.querySelector(".label-label").textContent;
+          const inputResult = input[Math.floor(Math.random() * input.length)];
+
+          output.innerHTML += `<p>${label}: ${inputResult}</p>`;
+        });
+      }
+
+      // add new input to wandomize
+      function AddItem() {
+        const firstFieldset = document.querySelector(".fieldset:last-of-type");
+        const clone = firstFieldset.cloneNode(true);
+        clone
+          .querySelector(".label")
+          .setAttribute("for", `random_${everyGrowingNumber}`);
+        clone
+          .querySelector(".input")
+          .setAttribute("id", `random_${everyGrowingNumber}`);
+
+        firstFieldset.insertAdjacentElement("afterend", clone);
+        everyGrowingNumber++;
+      }
+
+      function DeleteItem() {
+        event.target.closest(".fieldset").remove();
+      }
+
+      // BROKEN - pressing Enter in label should move user to input - don't use ID
+      // labelText.addEventListener("keypress", (event) => {
+      //   // on Enter
+      //   if (event.which === 13) {
+      //     event.preventDefault();
+      //     // or may be focus to next element
+      //     input1.focus();
+      //   }
+      // });
+
+      // BROKEN - pressing Enter in input should trigger form submit - don't use ID
+      // input1.addEventListener("keypress", (event) => {
+      //   if (event.which === 13) {
+      //     //   Randomize();
+      //     document.getElementById("submit").click();
+      //   }
+      // });
+    </script>
+  </body>
+</html>
