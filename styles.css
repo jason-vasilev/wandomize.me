@@ -1,0 +1,133 @@
+.body {
+  background-color: black;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+input {
+  box-sizing: border-box;
+}
+
+.form {
+  max-width: 300px;
+  margin: 16px auto;
+  outline: 2px dotted #393939;
+  padding: 40px;
+}
+
+.label {
+  margin-bottom: 8px;
+  display: block;
+}
+
+.edit-label {
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.edit-label svg {
+  transition: transform 0.25s ease-in-out;
+  pointer-events: none;
+}
+
+.edit-label:focus-visible,
+.edit-label:hover {
+  border-radius: 50%;
+  outline-offset: 1px;
+  border: 0;
+}
+
+.edit-label:focus-visible svg,
+.edit-label:hover svg {
+  fill: rgb(177, 75, 244);
+  transform: scale(1.2);
+}
+
+.input {
+  width: 100%;
+  padding: 16px 16px;
+  border: 0;
+  font-size: 16px;
+}
+
+.delete-item {
+  margin-left: auto;
+  background-color: transparent;
+  border: 0;
+  padding: 8px 0 8px 8px;
+  cursor: pointer;
+  color: white;
+  display: block;
+  opacity: 0.6;
+
+  transition: opacity 0.25s ease-in-out;
+}
+
+.delete-item * {
+  pointer-events: none;
+}
+
+.delete-item:hover,
+.delete-item:focus-visible {
+  opacity: 1;
+}
+
+.fieldset {
+  border: 0;
+  margin: 0 0 24px;
+  padding: 0;
+}
+
+/* disallow deleting the first input */
+.fieldset:first-of-type .delete-item {
+  display: none;
+}
+
+.new-item {
+  width: 100%;
+  padding: 16px 16px;
+  margin-top: 16px;
+  border: 0;
+  font-size: 16px;
+  color: white;
+  background-color: transparent;
+  border: 1px dashed #393939;
+  cursor: pointer;
+}
+
+.new-item:hover,
+.new-item:focus-visible {
+  text-decoration: underline;
+  border-style: solid;
+}
+
+.submit {
+  padding: 8px 16px;
+  border: 0;
+  cursor: pointer;
+
+  font-size: 16px;
+  border-radius: 16px;
+  font-weight: bold;
+  color: white;
+  margin: 24px auto 0 auto;
+  display: block;
+
+  transition: all 0.25s ease-in-out;
+
+  background-color: rgb(177, 75, 244);
+}
+
+.submit:hover,
+.submit:focus-visible {
+  background-color: rgb(27, 87, 184);
+}
+
+.hidden {
+  display: none;
+}
