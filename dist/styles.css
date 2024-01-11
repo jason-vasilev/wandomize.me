@@ -83,6 +83,10 @@ input {
   padding: 0;
 }
 
+.fieldset:not(:first-child) {
+  margin-bottom: 8px;
+}
+
 /* disallow deleting the first input */
 .fieldset:first-of-type .delete-item {
   display: none;
