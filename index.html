@@ -62,8 +62,9 @@
 
       function EditLabel() {
         const label = event.target.previousElementSibling;
-        // label.setAttribute("contenteditable", "true");
         label.focus();
+        // Select label text, to avoid mobile issue when tapping label changing focus to input
+        window.getSelection().selectAllChildren(label);
       }
 
       function Randomize() {
@@ -99,7 +100,19 @@
       }
 
       function DeleteItem() {
+        const itemToDelete = event.target.closest(".fieldset")
+        const allFieldSets = [...document.querySelectorAll('.fieldset')]
+
+        const indexOfClicked = allFieldSets.indexOf(itemToDelete)
+
         event.target.closest(".fieldset").remove();
+
+        // delete generated result for that input, too
+        const output = document.querySelectorAll("#output p")
+
+        if (output.length == allFieldSets.length) {
+          document.querySelectorAll("#output p")[indexOfClicked].remove();
+        }
       }
 
       // BROKEN - pressing Enter in label should move user to input - don't use ID
