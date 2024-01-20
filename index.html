@@ -10,7 +10,7 @@
   <body class="body">
     <form class="form" onsubmit="return false">
       <fieldset class="fieldset">
-        <label for="random_1" class="label">
+        <label for="random_item" class="label">
           <span contenteditable="true" class="label-label">Randomize</span>
 
           <button type="button" class="edit-label" onclick="EditLabel()">
@@ -36,7 +36,7 @@
         <input
           class="input"
           type="text"
-          id="random_1"
+          id="random_item"
           value="Banana, Orange, Pear, Apricot, Apple, Avocado, Blackberries, Blackcurrant, Blueberries, Boysenberries,cherry, Chokeberry, Cranberry, Durian, Elderberry"
         />
         <button type="button" class="delete-item" onclick="DeleteItem()">
@@ -58,11 +58,32 @@
 
     <script>
       // Great practice of using both magic numbers and global variables
-      let everyGrowingNumber = 2;
+      let everyGrowingNumber = 0;
+
+      // TODO: where should random eventListners like this be placed?
+      // TODO: alternative to ID selector
+      // pressing Enter in input should trigger form submit
+      const firstInput = document.getElementById('random_item');
+      firstInput.addEventListener("keypress", (event) => {
+        if (event.which === 13) {
+          Randomize();
+          // document.getElementById("submit").click();
+        }
+      });
 
       function EditLabel() {
         const label = event.target.previousElementSibling;
         label.focus();
+
+        label.addEventListener("keypress", (event) => {
+            // prevent empty lines
+            if (event.which === 13) {
+              event.preventDefault();
+              // change focus to next element - the input field
+              // TODO: find more futureproof way to select the input
+              event.target.parentElement.nextElementSibling.focus();
+            }
+          });
         // Select label text, to avoid mobile issue when tapping label changing focus to input
         window.getSelection().selectAllChildren(label);
       }
@@ -95,6 +116,25 @@
           .querySelector(".input")
           .setAttribute("id", `random_${everyGrowingNumber}`);
 
+          // TODO: this code is duplicated, find a way to define just once
+          clone.querySelector(".label-label").addEventListener("keypress", (event) => {
+            // prevent empty lines
+            if (event.which === 13) {
+              event.preventDefault();
+              // change focus to next element - the input field
+              clone.querySelector(".input").focus();
+            }
+          });
+
+          // TODO: this code is duplicated, find a way to define just once
+          clone.querySelector(".input").addEventListener("keypress", (event) => {
+            // prevent empty lines
+            if (event.which === 13) {
+              // Submit form
+              Randomize();
+            }
+          });
+
         firstFieldset.insertAdjacentElement("afterend", clone);
         everyGrowingNumber++;
       }
@@ -115,23 +155,6 @@
         }
       }
 
-      // BROKEN - pressing Enter in label should move user to input - don't use ID
-      // labelText.addEventListener("keypress", (event) => {
-      //   // on Enter
-      //   if (event.which === 13) {
-      //     event.preventDefault();
-      //     // or may be focus to next element
-      //     input1.focus();
-      //   }
-      // });
-
-      // BROKEN - pressing Enter in input should trigger form submit - don't use ID
-      // input1.addEventListener("keypress", (event) => {
-      //   if (event.which === 13) {
-      //     //   Randomize();
-      //     document.getElementById("submit").click();
-      //   }
-      // });
     </script>
   </body>
 </html>
